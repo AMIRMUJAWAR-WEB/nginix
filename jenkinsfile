@@ -2,25 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git url :'https://github.com/AMIRMUJAWAR-WEB/nginix.git', branch: 'master'
-            }
-        }
 
         stage('Install Nginx') {
             steps {
                 sh '''
-                    sudo apt update
-                    sudo apt install -y nginx
+                    sudo apt-get update -y
+                    sudo apt-get install nginx -y
+                    sudo systemctl enable nginx
+                    sudo systemctl start nginx
                 '''
             }
         }
 
-        stage('Copy index.html to Nginx') {
+        stage('Deploy index.html') {
             steps {
                 sh '''
+                    sudo rm -f /var/www/html/index.html
                     sudo cp index.html /var/www/html/index.html
+                    sudo chown www-data:www-data /var/www/html/index.html
                 '''
             }
         }
@@ -29,15 +28,6 @@ pipeline {
             steps {
                 sh 'sudo systemctl restart nginx'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Nginx deployed successfully with custom index.html!'
-        }
-        failure {
-            echo 'Deployment failed.'
         }
     }
 }
