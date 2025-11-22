@@ -1,20 +1,20 @@
 pipeline {
     agent any
-stages {
+
+    stages {
         stage('Checkout Code') {
             steps {
                 git url: 'https://github.com/AMIRMUJAWAR-WEB/nginix.git', branch: 'main'
             }
         }
 
-
-        stage('Install Nginx') {
+        stage('Install Apache') {
             steps {
                 sh '''
                     sudo apt-get update -y
-                    sudo apt-get install nginx -y
-                    sudo systemctl enable nginx
-                    sudo systemctl start nginx
+                    sudo apt-get install apache2 -y
+                    sudo systemctl enable apache2
+                    sudo systemctl start apache2
                 '''
             }
         }
@@ -29,9 +29,9 @@ stages {
             }
         }
 
-        stage('Restart Nginx') {
+        stage('Restart Apache') {
             steps {
-                sh 'sudo systemctl restart nginx'
+                sh 'sudo systemctl restart apache2'
             }
         }
     }
