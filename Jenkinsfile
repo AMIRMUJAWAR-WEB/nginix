@@ -1,6 +1,11 @@
 pipeline {
     agent any
-
+stages {
+        stage('Checkout Code') {
+            steps {
+                git url: 'https://github.com/Aakashnadarr/devops.git', branch: 'master'
+            }
+        }
     stages {
 
         stage('Install Nginx') {
