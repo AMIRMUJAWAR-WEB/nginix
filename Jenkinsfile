@@ -3,7 +3,7 @@ pipeline {
 stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/Aakashnadarr/devops.git', branch: 'master'
+                git url: 'https://github.com/AMIRMUJAWAR-WEB/nginix.git', branch: 'main'
             }
         }
     stages {
