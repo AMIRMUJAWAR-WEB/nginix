@@ -6,7 +6,7 @@ stages {
                 git url: 'https://github.com/AMIRMUJAWAR-WEB/nginix.git', branch: 'main'
             }
         }
-    stages {
+
 
         stage('Install Nginx') {
             steps {
