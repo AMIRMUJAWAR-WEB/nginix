@@ -8,6 +8,15 @@ pipeline {
             }
         }
 
+        stage('Stop & Disable Nginx') {
+            steps {
+                sh '''
+                    sudo systemctl stop nginx || true
+                    sudo systemctl disable nginx || true
+                '''
+            }
+        }
+
         stage('Install Apache') {
             steps {
                 sh '''
