@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git clone 'https://github.com/your-repo/nginx-pipeline.git', branch: 'master'
+            }
+        }
+
+        stage('Install Nginx') {
+            steps {
+                sh '''
+                    sudo apt update
+                    sudo apt install -y nginx
+                '''
+            }
+        }
+
+        stage('Copy index.html to Nginx') {
+            steps {
+                sh '''
+                    sudo cp index.html /var/www/html/index.html
+                '''
+            }
+        }
+
+        stage('Restart Nginx') {
+            steps {
+                sh 'sudo systemctl restart nginx'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Nginx deployed successfully with custom index.html!'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
+    }
+}
